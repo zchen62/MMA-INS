@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'INS-Quebec-demo'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DEAD33046B8943089F753DE7E46189ED }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_51FE58FD50A4429CAFC08FEA5C5F11C1 }}
