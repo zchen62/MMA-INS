@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 import pyodbc
+import pandas as pd
+import os
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -20,6 +22,9 @@ CONNECTION_STRING = (
     "TrustServerCertificate=no;"
     "Connection Timeout=30;"
 )
+
+# Local CSV file path
+CSV_FILE_PATH = "files/athleteID_listeGDS_mcgillMMA(in).csv"  # Update this with your actual CSV file name
 
 def insert_name(name: str) -> str:
     try:
@@ -64,6 +69,35 @@ async def hello(request: Request, name: str = Form(...)):
     else:
         print('Request for hello page received with no name or blank name -- redirecting')
         return RedirectResponse(request.url_for("index"), status_code=status.HTTP_302_FOUND)
+
+@app.get("/data-imported", response_class=HTMLResponse)
+async def show_data(request: Request):
+    try:
+        # Check if file exists
+        if not os.path.exists(CSV_FILE_PATH):
+            raise FileNotFoundError(f"CSV file not found at {CSV_FILE_PATH}")
+        
+        # Read CSV into pandas DataFrame
+        df = pd.read_csv(CSV_FILE_PATH, encoding='iso-8859-1')
+        
+        # Get first 5 rows and convert to HTML table
+        table_html = df.head().to_html(classes=['table', 'table-striped'])
+        
+        return templates.TemplateResponse(
+            'data_imported.html',
+            {
+                "request": request,
+                "table": table_html
+            }
+        )
+    except Exception as e:
+        return templates.TemplateResponse(
+            'data_imported.html',
+            {
+                "request": request,
+                "error": f"Error loading data: {str(e)}"
+            }
+        )
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host='0.0.0.0', port=8000)
