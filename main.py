@@ -16,7 +16,8 @@ DB_CONFIG = {
     'host': 'ins-quebec-public.database.windows.net',
     'user': 'vhwjebgwst',
     'password': '8viLo6wKD6Bht$Te',
-    'database': 'Name'
+    'database': 'Name',
+    'port': 1433
 }
 
 def insert_name(name: str):
