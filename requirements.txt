@@ -4,3 +4,4 @@ gunicorn
 jinja2
 python-multipart
 mysql-connector-python
+pyodbc
