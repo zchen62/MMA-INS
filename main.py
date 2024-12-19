@@ -11,11 +11,14 @@ templates = Jinja2Templates(directory="templates")
 
 # Database configuration
 CONNECTION_STRING = (
-    "Driver={ODBC Driver 17 for SQL Server};"
-    "Server=ins-quebec-public.database.windows.net,1433;"
-    "Database=Name;"
-    "UID=vhwjebgwst;"
-    "PWD=8viLo6wKD6Bht$Te;"
+    "Driver={ODBC Driver 18 for SQL Server};"
+    "Server=tcp:ins-quebec-public.database.windows.net,1433;"
+    "Database=ins-quebec-public;"
+    "Uid=vhwjebgwst;"
+    "Pwd=8viLo6wKD6Bht$Te;"
+    "Encrypt=yes;"
+    "TrustServerCertificate=no;"
+    "Connection Timeout=30;"
 )
 
 def insert_name(name: str) -> str:
